@@ -27,6 +27,9 @@ class BasicDAO:
         self.fields = None
         self.table_name = None
 
+    def exists(self):
+        return os.path.exists(self.file)
+
     def delete_file(self):
         try:
             os.unlink(self.file)
@@ -53,9 +56,16 @@ class BasicDAO:
     def undefine(self):
         self.fields = self.table_name = None
         
-    def open(self):
-        if not self.is_defined():
-            return False
+    def open(self, bHasTable=True):
+        """ 
+        Open the database file. Default is to check for class field 
+        associations. Use False for `query only` usage.
+        
+        Returns True upon success, else False.
+        """
+        if(bHasTable):
+            if not self.is_defined():
+                return False
         if self.bOpen is False:
             self.conn = sqlite3.connect(self.file)
             self.curs = self.conn.cursor()
@@ -161,6 +171,11 @@ if __name__ == '__main__':
     for row in dao.select(f"select * from {dao.table_name};"):
         print(*row)
     dao.close()
+    from FormGUI.Project.ProjectFile import ProjectFile
+    for table in ProjectFile.Import(dao.file):
+        for field in table.fields:
+            print(table.table_name, field, table.fields[field])
+
 
 
         

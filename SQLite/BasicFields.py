@@ -10,7 +10,7 @@ class BasicFields(object):
     """
 
     BADIES = ' ', '\n', '\r', '\t', '\\', '/', ':', ';'
-    SupportedTypes = "INTEGER", "REAL", "TEXT", "BLOB"
+    SupportedTypes = "INTEGER", "REAL", "TEXT", "BLOB" # Keep Upper!
 
     def __init__(self):
         self.fields = OrderedDict()
@@ -26,6 +26,9 @@ class BasicFields(object):
 
     def get_fields(self):
         return self.fields
+
+    def has_fields(self):
+        return len(self.fields) > 0
 
     @staticmethod
     def IsType(zType):

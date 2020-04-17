@@ -2,6 +2,7 @@ import os
 
 from collections import OrderedDict
 
+from FormGUI.SQLite.BasicDAO import BasicDAO
 from FormGUI.SQLite.BasicTable import BasicTable
 from FormGUI.Project.Normalizers import Norm
 from FormGUI.Project.Meta import Meta
@@ -23,6 +24,22 @@ class ProjectFile(object):
         ''' Enforce our "no file type" and "no file path" policies.
         '''
         self.project_name = Norm.Remove(self.project_name, Meta.ProjType)
+
+    @staticmethod
+    def Import(sql_file):
+        dao = BasicDAO(sql_file)
+        if not dao.exists():
+            return None
+        if not dao.open(False):
+            return None
+        results = list()
+        for row in dao.select("SELECT * FROM sqlite_master WHERE name NOT LIKE 'sqlite_%';"):
+            sql = row[-1]
+            print(sql)
+            zTable = BasicTable.FromSQL(sql)
+            if zTable:
+                results.append(zTable)
+        return results
 
     @staticmethod
     def Fixup(project_file):
