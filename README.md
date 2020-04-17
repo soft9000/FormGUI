@@ -2,11 +2,13 @@
 
 Mission: Rapidly generate Graphical User Interfaces to collect, query, and manage your data. 
 
+**OFFICIAL STATUS:** This project is presently in R&D - No GUI's are YET able to be created.
+
 # Overview
 
 Greetings!
 
-Have you ever wanted to create a Fill-Out-Form (FOF) from an SQLite table?
+Have you ever wanted to create a Fill-Out-Form (FOF) from an SQLite Table?
 
 
 ## GUI Quick Start
