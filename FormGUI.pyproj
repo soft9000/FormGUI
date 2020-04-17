@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5b2178c1-d351-4e95-b01b-ec891b61a3dd}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>main.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="README.TXT" />
+    <Content Include="zicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Gui\StandardEntry.py" />
+    <Compile Include="Gui\GuiFields.py" />
+    <Compile Include="main.py" />
+    <Compile Include="Project\ProjectFile.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLite\BasicFields.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Project\DataDetective.py" />
+    <Compile Include="Project\Meta.py" />
+    <Compile Include="Project\Normalizers.py" />
+    <Compile Include="SQLite\BasicDAO.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQLite\BasicTable.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Gui" />
+    <Folder Include="SQLite\" />
+    <Folder Include="Project\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
