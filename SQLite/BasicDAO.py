@@ -26,6 +26,30 @@ class BasicDAO:
         self.bOpen = False
         self.fields = None
         self.table_name = None
+        
+    def _flat_keys(self, iter):
+        result = None
+        for ref in iter:
+            if not result:
+                result = "(" + str(ref)
+            else:
+                result += "," + str(ref)
+        result += ")"
+        return result
+
+    def _flat_values(self, values):
+        results = None
+        for key in values:
+            if not results:
+                results = "("
+            else:
+                results += ","
+            if self.fields[key] == "TEXT":
+                results += "'" + values[key] + "'"
+            else:
+                results += str(values[key])
+        results += ')'
+        return results
 
     def exists(self):
         return os.path.exists(self.file)
@@ -110,8 +134,8 @@ class BasicDAO:
             for zKey in sql_fields:
                 if zKey not in self.fields:
                     return False
-            zKeys = tuple(sql_fields.keys())
-            zValues = tuple(sql_fields.values())
+            zKeys   = self._flat_keys(sql_fields.keys())
+            zValues = self._flat_values(sql_fields)
             self.curs.execute(
                 f"INSERT INTO {self.table_name} {zKeys} VALUES {zValues};")
             return True
@@ -156,8 +180,8 @@ class BasicDAO:
 
 if __name__ == '__main__':
     fields = BasicFields()
-    assert(fields.add_field("Name", "Text"))
-    assert(fields.add_field("Age", "Integer"))
+    assert(fields.add_field("Name", "TEXT"))
+    assert(fields.add_field("Age", "INTEGER"))
     dao = BasicDAO()
     dao.delete_file()
     assert(dao.define(fields))
