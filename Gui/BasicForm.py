@@ -12,6 +12,7 @@ from FormGUI.Project.Meta import Meta
 
 
 # Mission: Create a way to CRUD a BasicTable.
+
 class BasicForm:
     def __init__(self):
         self._dict = None
@@ -94,7 +95,6 @@ class BasicForm:
             except:
                 pass
 
-
     @staticmethod
     def EntryCreate(basic_table, title="Input"):
         if not isinstance(basic_table, BasicTable):
@@ -107,7 +107,7 @@ class BasicForm:
 
 
 if __name__ == "__main__":
-    # Here is how we would use the BasicForm from a Console Program:
+    # Here is how we would use the BasicForm from a Console 'TUI:
     table = BasicTable()
     table.add_field("Email", "TEXT")
     table.add_field("Name", "TEXT")

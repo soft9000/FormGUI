@@ -21,7 +21,7 @@ class BasicFields(object):
             return False
         if not BasicFields.IsType(zType):
             return False
-        self.fields[zName] = zType
+        self.fields[zName] = zType.upper()
         return True
 
     def get_fields(self):
