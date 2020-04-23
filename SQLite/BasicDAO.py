@@ -128,18 +128,16 @@ class BasicDAO:
         return False
         
     def insert(self, sql_fields):
-        if self.bOpen:
+         if self.bOpen:
             if not isinstance(sql_fields, dict):
-                return False
+                return
             for zKey in sql_fields:
                 if zKey not in self.fields:
-                    return False
+                    return
             zKeys   = self._flat_keys(sql_fields.keys())
             zValues = self._flat_values(sql_fields)
-            self.curs.execute(
-                f"INSERT INTO {self.table_name} {zKeys} VALUES {zValues};")
-            return True
-        return False
+            return self.curs.execute(
+                f"INSERT INTO {self.table_name} {zKeys} VALUES {zValues};").lastrowid
         
     def update(self, id_, sql_fields):
         if self.bOpen:
