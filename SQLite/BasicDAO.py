@@ -37,6 +37,16 @@ class BasicDAO:
         result += ")"
         return result
 
+    def denorm(self, value):
+       value = value.replace("&#39;", "'")
+       value = value.replace("&quot;", '"')
+       return value
+
+    def norm(self, value):
+       value = value.replace("'", "&#39;")
+       value = value.replace('"', "&quot;")
+       return value
+
     def _flat_values(self, values):
         results = None
         for key in values:
@@ -45,7 +55,7 @@ class BasicDAO:
             else:
                 results += ","
             if self.fields[key] == "TEXT":
-                results += "'" + values[key] + "'"
+                results += "'" + self.norm(values[key]) + "'"
             else:
                 results += str(values[key])
         results += ')'
