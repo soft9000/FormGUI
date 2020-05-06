@@ -162,13 +162,10 @@ class BasicDAO:
                     zSet += ", "
                 else:
                     bFirst = False
-                zValue = sql_fields[key]
-                if isinstance(zValue, str):
-                    zSet += key + f'="{zValue}"'
-                else:
-                    zSet += key + f"={zValue}"
+                zSet = f"{key} = ? "
             self.curs.execute(
-                f"UPDATE {self.table_name} {zSet} WHERE ID = {id_};")
+                f"UPDATE {self.table_name} {zSet} WHERE ID = {id_};",
+                tuple(sql_fields.values()))
             return True
         return False
         
