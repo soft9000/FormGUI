@@ -162,7 +162,7 @@ class BasicDAO:
                     zSet += ", "
                 else:
                     bFirst = False
-                zSet = f"{key} = ? "
+                zSet += f"{key} = ? "
             self.curs.execute(
                 f"UPDATE {self.table_name} {zSet} WHERE ID = {id_};",
                 tuple(sql_fields.values()))
