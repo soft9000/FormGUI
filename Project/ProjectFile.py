@@ -23,7 +23,9 @@ class ProjectFile(object):
         # https://github.com/soft9000/PyDAO/blob/master/SqltDAO/SchemaDef/OrderDef.py
         ''' Enforce our "no file type" and "no file path" policies.
         '''
-        self.project_name = Norm.Remove(self.project_name, Meta.ProjType)
+        self.project_name = Norm.Remove(self.project_name, Meta.ProjType).replace('\\','/')
+        cols = self.project_name.split('/')
+        self.project_name = cols[-1]  
 
     @staticmethod
     def Import(sql_file):

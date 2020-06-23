@@ -82,8 +82,8 @@ class Main(Tk):
             self.order_def = zdef
             self._show_order()
 
-    def do_save(self):
-        ''' Project file must be created for both saving same, as well as for creating code. '''
+    def _funkey(self, funk):
+        ''' Lots of re-use here - pull def, do funk, mark as ok iff same. '''
         ztbl = self.scraper.pull_results()
         self.order_def = ProjectFile(name=ztbl.get_table_name())
         if not self.order_def.add_table(ztbl):
@@ -91,15 +91,33 @@ class Main(Tk):
                 "Invalid Table",
                 "Please verify SQL Table Definition.")
             return False
+        if funk() == False:
+            return False
+        self.scraper.got_results()
+        return True
+
+    def _funkey_save(self):
+        ''' funk for saving the file - complain on error, only '''
         if ProjectFile.SaveFile(self.home, self.order_def, overwrite=True) is False:
             messagebox.showerror(
                 "Exportation Error",
                 "Please verify user locations.")
             return False
-        self.scraper.got_results()
         return True
+
+    def _funkey_gen(self):
+        ''' TODO: funk for generating the FormGUI, final - complain on error, only '''
+        messagebox.showinfo("Source Code TO-DO", Meta.ABOUT)
+        return False
+
+    def do_save(self):
+        ''' 
+        Quietly save the project to the table-benamed, file. 
+        Complain only if error.'''
+        return self._funkey(self._funkey_save)
     
     def _on_save(self):
+        ''' GUI Event - Confirm Success Falure '''
         if self.do_save() is True:
             val = os.path.split(self.order_def.project_name)
             messagebox.showinfo(
@@ -107,15 +125,17 @@ class Main(Tk):
                 "Project file saved.")
 
     def _on_create_gui(self):
-        ''' Generate FormGUI Final '''
-        messagebox.showinfo("Source Code TO-DO", Meta.ABOUT)
+        ''' GUI Event - Confirm Success Falure '''
+        return self._funkey(self._funkey_gen)
 
     def _on_about(self):
+        ''' GUI Event - Modal '''
         messagebox.showinfo(
             self.ztitle,
             Meta.ABOUT)
 
     def _show_order(self):
+        ''' GUI Event - Confirm Success Falure '''
         if not self.order_def:
             return False
         self.scraper.empty()
