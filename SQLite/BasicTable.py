@@ -40,10 +40,10 @@ class BasicTable(BasicFields):
             for zKey in BasicFields.SupportedTypes:
                 if field.startswith("VARCHAR"):
                     if(result.add_field(zName, "TEXT")):
-                        continue
+                        break
                 if field in BasicFields.SupportedTypes[zKey]:
                     if(result.add_field(zName, zKey)):
-                        continue
+                        break
                     else:
                         return False # 98:02?
         if not result.has_fields():
