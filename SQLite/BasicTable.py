@@ -37,12 +37,15 @@ class BasicTable(BasicFields):
                     continue     # We'll provide
             zName = field.split()[0]
             field = field.upper()
-            for zType in BasicFields.SupportedTypes:
-                if zType in field:
-                    if(result.add_field(zName, zType)):
+            for zKey in BasicFields.SupportedTypes:
+                if field.startswith("VARCHAR"):
+                    if(result.add_field(zName, "TEXT")):
+                        continue
+                if field in BasicFields.SupportedTypes[zKey]:
+                    if(result.add_field(zName, zKey)):
                         continue
                     else:
-                        return False # 80:20?
+                        return False # 98:02?
         if not result.has_fields():
             return None
         return result

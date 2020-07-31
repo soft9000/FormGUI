@@ -10,7 +10,13 @@ class BasicFields(object):
     """
 
     BADIES = ' ', '\n', '\r', '\t', '\\', '/', ':', ';'
-    SupportedTypes = "INTEGER", "REAL", "TEXT", "BLOB" # Keep Upper!
+    SupportedTypes = {
+    "INTEGER":["INTEGER", "INT", "TINYINT", "SMALLINT", "MEDIUMINT", "BIGINT",
+    "INT2", "INT4", "INT8"],
+    "REAL":["REAL", "DOUBLE", "DOUBLE PRECISION", "FLOAT", "MONEY"],
+    "TEXT":["TEXT", "STRING", "VARCHAR"],
+    "BLOB":["BLOB", "BYTE[]"]
+    }
 
     def __init__(self):
         self.fields = OrderedDict()
